@@ -13,10 +13,21 @@ const addProject = async (req, res) => {
 }
 const getProjects = async (req, res) => {
     try {
-        const projects = await Project.find()
+
+        const projects = await Project.find().populate("student")
         return res.status(200).json(projects)
     } catch (error) {
 
     }
 }
-module.exports = { addProject, getProjects }
+const getProjectById = async (req, res) => {
+    try {
+        const project = await Project.findById(req.params.id).populate("student");
+        //const project = await Project.find({ _id: req.params.id }).populate("student");
+        return res.status(200).json(project)
+    } catch (error) {
+
+    }
+
+}
+module.exports = { addProject, getProjects, getProjectById }
